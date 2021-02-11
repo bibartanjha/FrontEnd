@@ -1,0 +1,2 @@
+2021-02-10 18:45:38,788 - INFO - 127.0.0.1 - - [10/Feb/2021 18:45:38] "[37mPOST /Documents HTTP/1.1[0m" 200 -
+2021-02-10 18:45:44,972 - INFO -  * Detected change in 'C:\\Users\\Administrator\\FrontEnd\\main.py', reloading
