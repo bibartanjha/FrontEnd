@@ -1,0 +1,70 @@
+{% extends 'index.html' %}
+{% block head %}
+   <meta charset="UTF-8">
+   <title>SMTP</title>
+{% endblock %}
+{% block body %}
+
+
+
+{% if edit_mode %}
+<div class="modal">
+	<div class="modal-content">
+  		<form  method=post>
+			<input type=submit class="close-modal" name="closeEdit" value="X">
+			<br><br>
+
+			<label>Server</label>
+		    <textarea name = "server" rows = "1" cols = "75">{{SMTPserver}}</textarea><br><br>
+
+		    <label>Port</label>
+		    <textarea name = "port" rows = "1" cols = "75">{{SMTPport}}</textarea><br><br>
+
+		    <br>
+		    <label>SSL or TLS</label>
+		    <select name="SSLorTLS" id="SSLorTLS">
+		    		{% if SSL %}
+						<option selected>SSL</option>
+						<option>TLS</option>
+					{% else %}
+						<option>SSL</option>
+						<option selected>TLS</option>
+					{% endif %}
+			</select>
+
+			<br><br>
+
+			<label>Sender Email Address</label>
+		    <textarea name = "email address" rows = "1" cols = "75">{{sender_address}}</textarea><br><br>
+
+		    <label>Sender Password</label>
+		    <textarea name = "password" rows = "5" cols = "75">{{sender_password}}</textarea><br><br><br><br><br><br><br>
+		    
+		    <input type="submit" class="form-button" name="save" value="Save Changes">	    
+		</form>
+	</div>
+</div>
+{% endif %}
+
+
+<div class ="upload-form">
+	<form  method=post>
+		<input type=submit name="edit" value="Edit">
+	</form>
+</div>
+<br><br><br><br><br><br>
+<div>
+<fieldset>
+
+	<legend>SMTP</legend>
+	    <p><b>Server</b> {{SMTPserver}}</h6>
+	    <p><b>Port</b> {{SMTPport}}</h6>
+    	<p><b>SSL</b> {{SSL}}</h6>
+		<br><br><br>
+
+		<p><b>Sender Email Address</b> {{sender_address}}</h6>
+		<p><b>Sender Password </b> {{sender_password}}</h6>
+</fieldset>
+</div>
+
+{% endblock %}

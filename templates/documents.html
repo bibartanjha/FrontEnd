@@ -1,0 +1,205 @@
+{% extends 'index.html' %}
+{% block head %}
+   <meta charset="UTF-8">
+   <title>Templates</title>
+{% endblock %}
+{% block body %}
+<div class ="upload-form">
+	<form  method=post>
+		<input type=submit name="uploadNewTemplate" value="Upload new template">
+	</form>
+</div>
+
+
+
+{% if display == "Upload new template modal" %}
+<div class="modal">
+	<div class="modal-content">
+		<form  method=post>
+			<input type=submit class="close-modal" name="closeNewTemplate" value="X">
+		</form>
+		<h3>Upload new template</h3>
+		<br>
+		<form method=post enctype=multipart/form-data>
+				<p><input type=file name=file>
+				<input type=submit name="uploadedFile" value="Upload">
+		</form>
+	</div>
+</div>
+
+
+{% elif display == "Upload success" %}}
+<div class="modal">
+	<div class="modal-content">
+		<form  method=post>
+			<input type=submit class="close-modal" name="closeNewTemplate" value="X">
+		</form>
+		<h3>Upload new template</h3>
+		<br>
+		<form method=post enctype=multipart/form-data>
+			<p><input type=file name=file>
+			<input type=submit name="uploadedFile" value="Upload">
+		</form>
+		<p style='color: green'>Template successfully uploaded</p>
+	</div>
+</div>
+
+{% elif display == "Upload failure" %}}
+<div class="modal">
+	<div class="modal-content">
+		<form  method=post>
+			<input type=submit class="close-modal" name="closeNewTemplate" value="X">
+		</form>
+		<h3>Upload new template</h3>
+		<br>
+		<form method=post enctype=multipart/form-data>
+			<p><input type=file name=file>
+			<input type=submit name="uploadedFile" value="Upload">
+		</form>
+		<p style='color: red'>Error: Upload a valid .docx file</p>
+	</div>
+</div>
+
+{% elif display == "More options"%}
+<div class="modal">
+	<div class="modal-content">
+  		<form  method=post>
+			<input type=submit class="close-modal" name="closeNewTemplate" value="X">
+
+			<select hidden name="file_name" id="file_name">
+					<option selected>{{file_name}}</option>
+			</select>
+
+			<h3>{{file_name}}</h3>
+			<br>
+			<div class = "options">
+				<div class = "download-template-button">
+						<i class="fa fa-download"></i>
+						<input type=submit name="downloadTemplate" value="Download Template">
+				</div>
+				<div class = "download-pdf-button">
+						<i class="fa fa-download"></i>
+						<input type=submit name="downloadPDF" value="Download Generated PDF">
+				</div>
+
+				<div class = "email-button">
+					<i class="fa fa-envelope"></i>
+					<input type=submit name="email" value="Email PDF">
+				</div>
+				<div class = "delete-button">
+					<i class="fa fa-trash"></i>
+					<input type=submit name="delete" value="Delete">
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+{% elif display == "Create email"%}
+<div class="modal">
+	<div class="modal-content">
+  		<form  method=post>
+			<input type=submit class="prev-page" name="goBack" value="Previous Page">
+			<input type=submit class="close-modal" name="closeNewTemplate" value="X">
+
+			<select hidden name="file_name" id="file_name">
+					<option selected>{{file_name}}</option>
+			</select>
+			<br><br>
+
+			<label>Recipient(s)</label>
+		    <textarea name = "recipients" rows = "1" cols = "75" placeholder="Put space between each email address"></textarea><br><br>
+
+		    <label>Subject</label>
+		    <textarea name = "subject" rows = "1" cols = "75"></textarea><br><br>
+
+		    <label>Attachment</label>
+		    <textarea name = "attachment" rows = "1" cols = "75" style="background-color:lightgray" readonly>{{file_name}}.pdf</textarea><br><br>
+
+		    <label>Body</label>
+		    <textarea name = "body" rows = "5" cols = "75"></textarea><br><br><br><br><br><br><br>
+		    
+		    <input type="submit" class="form-button" name="emailSend" value="Send">	    
+		</form>
+	</div>
+</div>
+
+{% elif display == "Email sent"%}
+<div class="modal">
+	<div class="modal-content">
+  		<form  method=post>
+			<input type=submit class="prev-page" name="goBackToEmail" value="Previous Page">
+			<input type=submit class="close-modal" name="closeNewTemplate" value="X">
+
+			<select hidden name="file_name" id="file_name">
+					<option selected>{{file_name}}</option>
+			</select>
+			<br><br>
+
+			{%if recipients|length == 0 %}
+				<h6>Error: No valid emails provided</h6>
+			{% else %}
+				<h3>{{file_name}} was sent to: </h3>
+				{% for rec in recipients %}
+					<h6>{{rec}}</h6>
+				{% endfor %}
+			{% endif %}
+
+			<input type="submit" name="show-all" class="form-button" value="Ok">    
+		</form>
+	</div>
+</div>
+
+{% elif display == "Confirm delete"%}
+<div class="modal">
+	<div class="modal-content">
+  		<form  method=post>
+  			<input type=submit class="prev-page" name="goBack" value="Previous Page">
+			<input type=submit class="close-modal" name="closeNewTemplate" value="X">
+
+			<select hidden name="file_name" id="file_name">
+					<option selected>{{file_name}}</option>
+			</select>
+			<br><br>
+
+			<h6 style="color: red">Confirm delete {{file_name}}?</h6>
+			<input type="submit" class="form-button" name="deleteConfirmYes" value="Yes">
+			<input type="submit" class="form-button" name="goBack" value="No">
+		</form>
+	</div>
+</div>
+
+{% elif display == "Deleted"%}
+<div class="modal">
+	<div class="modal-content">
+  		<form  method=post>
+  			<input type=submit class="prev-page" name="goBack" value="Previous Page">
+			<input type=submit class="close-modal" name="closeNewTemplate" value="X">
+
+			<br><br>
+
+			<h6>{{file_name}} has been deleted</h6>
+			<input type="submit" name="show-all" class="form-button" value="Ok"> 
+		</form>
+	</div>
+</div>
+{% endif %}
+
+
+<br><br><br><br><br><br><br>
+<table style="width:50vw">
+	  <th>Files</th>
+	  {% for file in files %}
+	  <tr>
+	    <td>
+	    	<form method=post>
+				<select hidden name="file_name" id="file_name">
+					<option selected>{{file}}</option>
+				</select>
+				<input type=submit class='file-name' name="seeMoreOptions" value="{{file}}">
+			</form>
+	    </td>
+	  </tr>
+	  {% endfor %}
+</table>
+{% endblock %}
